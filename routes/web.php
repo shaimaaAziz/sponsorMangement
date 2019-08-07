@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/', function () {
+    return view('sponsor');
+});
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -22,6 +28,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('personal' ,'PersonalSponsorsController');
 
-Route::get('search' ,'PersonalSponsorsController@searchGet')->name('search');
-Route::post('search' ,'PersonalSponsorsController@searchPost')->name('search');
+Route::get('personal' ,'PersonalSponsorsController@searchGet')->name('search');
+Route::post('personal' ,'PersonalSponsorsController@searchPost')->name('search');
 

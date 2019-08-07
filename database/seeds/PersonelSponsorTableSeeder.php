@@ -29,7 +29,7 @@ class PersonelSponsorTableSeeder extends Seeder
           'mobileNumber' =>'059987515',
           'email' =>'sh@gmail.com',
           'nationality' =>'فلسطينية',
-          'CountryOfResidence' =>'فلسطين',
+          'CountryOfResidence' =>'1',
           'identificationNumber' =>'35486634',
           'definitionType' =>'هوية',
 
@@ -50,7 +50,7 @@ class PersonelSponsorTableSeeder extends Seeder
           'mobileNumber' =>'0599871515',
           'email' =>'sh11@gmail.com',
           'nationality' =>'فلسطينية',
-          'CountryOfResidence' =>'فلسطين',
+          'CountryOfResidence' =>'1',
           'identificationNumber' =>'354866134',
           'definitionType' =>'هوية',
 
@@ -71,7 +71,7 @@ class PersonelSponsorTableSeeder extends Seeder
           'mobileNumber' =>'0599871515',
           'email' =>'sh1@gmail.com',
           'nationality' =>'فلسطينية',
-          'CountryOfResidence' =>'فلسطين',
+          'CountryOfResidence' =>'1',
           'identificationNumber' =>'354866341',
           'definitionType' =>'هوية',
 

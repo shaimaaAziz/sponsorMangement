@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -62,8 +63,10 @@
                 margin-bottom: 30px;
             }
         </style>
+
+
     </head>
-    <body>
+    <body >
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">

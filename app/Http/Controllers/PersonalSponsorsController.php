@@ -22,72 +22,131 @@ class PersonalSponsorsController extends Controller
     public function index()
     {
 
-        $personel = DB::table('personal_sponsors')->Paginate(2);
+//        $personal = DB::table('personal_sponsors')->Paginate(2);
+        $personal = PersonalSponsor::all();
         $country= Country::all();
         $city=City::all();
         $governorate=Governorate::all();
         $neighborhood=Neighborhood::all();
         $nationality=Nationality::all();
 
-        return view('personel.index',compact('personel','country','city','governorate',
-            'neighborhood','nationality'));
+        return response()->json([
+            'personal' => $personal,
+            'country'=>$country,
+            'city'=>$city,
+            'governorate'=>$governorate,
+            'neighborhood'=>$neighborhood,
+            'nationality'=>$nationality
 
+        ], 200);
     }
 
 
     public function searchGet(){
-        $personel = DB::table('personal_sponsors')->Paginate(2);
+        $personal=PersonalSponsor::all();
+//        $personal = DB::table('personal_sponsors')->Paginate(2);
         $country= Country::all();
         $city=City::all();
         $governorate=Governorate::all();
         $nationality=Nationality::all();
 
-        return view('personel.search',compact('personel','country','city','governorate',
-           'nationality'));
+        return response()->json([
+            'personal' => $personal,
+            'country'=>$country,
+            'city'=>$city,
+            'governorate'=>$governorate,
+            'nationality'=>$nationality
+
+        ], 200);
     }
 
     public function searchPost(Request $request){
 
 
-//        $firstName= $request->firstName;
-//        $secondName= $request->secondName;
-//        $thirdName= $request->thirdName;
-//        $fourthName= $request->fourthName;
-//        $addressDetails =$request->addressDetails;
-//        $telephoneNumber =$request->telephoneNumber;
-//        $CountryOfResidence =$request->CountryOfResidence;
-
-//        $personel = DB::table('personal_sponsors')->Paginate(2);
-
+        $person = new PersonalSponsor();
         if ($request->type === 'شخصي') {
 
-            $personel = PersonalSponsor::query()
-                ->where('firstName', 'LIKE', "%{$request->firstName}%")
-                ->orWhere('secondName', 'LIKE', "%{ $request->secondName}%")
-                ->orWhere('thirdName', 'LIKE', "%{$request->thirdName}%")
-                ->orWhere('fourthName', 'LIKE', "%{$request->fourthName}%")
-                ->orWhere('addressDetails', 'LIKE', "%{$request->addressDetails}%")
-                ->orWhere('telephoneNumber', 'LIKE', "%{$request->telephoneNumber}%")
-                ->orWhere('CountryOfResidence', 'LIKE', "%{$request->CountryOfResidence}%")
-                ->get();
+                    if (isset($request->firstName)) {
+                        $person = $person->where('firstName', 'LIKE', '%' . $request->firstName . '%')
+                            ->where('type', '=', 'شخصي');
+                    }
+                    if (isset($request->secondName)) {
+                        $person = $person->where('secondName', 'LIKE', '%' . $request->secondName . '%')
+                            ->where('type', '=', 'شخصي');
+                    }
+                    if (isset($request->thirdName)) {
+                        $person = $person->where('thirdName', 'LIKE', '%' . $request->thirdName . '%')
+                            ->where('type', '=', 'شخصي');
 
-            return view('personel.search', compact('personel'));
+                    }
+                    if (isset($request->fourthName)) {
+                        $person = $person->where('fourthName', 'LIKE', '%' . $request->fourthName . '%')
+                            ->where('type', '=', 'شخصي');
+
+                    }
+                    if (isset($request->addressDetails)) {
+                        $person = $person->where('addressDetails', 'LIKE', '%' . $request->addressDetails . '%')
+                        ->where('type', '=', 'شخصي');
+
+                    }
+                    if (isset($request->telephoneNumber)) {
+                        $person = $person->where('telephoneNumber', 'LIKE', '%' . $request->telephoneNumber . '%')
+                        ->where('type', '=', 'شخصي');
+                    }
+                    if (isset($request->CountryOfResidence)) {
+                        $person = $person->where('CountryOfResidence', 'LIKE', '%' . $request->CountryOfResidence . '%')
+                        ->where('type', '=', 'شخصي');
+                    }
+
+                    $person = $person->get();
+
+                    return response()->json([
+                        'personal' => $person,
+
+                    ], 200);
+
         }
 
         elseif ($request->type === 'مؤسسي') {
 
-            $personel = PersonalSponsor::query()
-                ->where('firstName', 'LIKE', "%{$request->firstName}%")
-                ->orWhere('secondName', 'LIKE', "%{ $request->secondName}%")
-                ->orWhere('thirdName', 'LIKE', "%{$request->thirdName}%")
-                ->orWhere('fourthName', 'LIKE', "%{$request->fourthName}%")
-                ->orWhere('addressDetails', 'LIKE', "%{$request->addressDetails}%")
-                ->orWhere('telephoneNumber', 'LIKE', "%{$request->telephoneNumber}%")
-                ->orWhere('CountryOfResidence', 'LIKE', "%{$request->CountryOfResidence}%")
-                ->get();
+            if(isset($request->firstName)){
+                $person = $person->where('firstName', 'LIKE', '%'.$request->firstName.'%')
+                    ->where('type', '=', 'مؤسسي');
+            }
+            if(isset($request->secondName)){
+                $person = $person-> where('secondName', 'LIKE', '%'.$request->secondName.'%')
+                    ->where('type', '=', 'مؤسسي');
 
-            return view('personel.search', compact('personel'));
+            }if(isset($request->thirdName)){
+                $person = $person-> where('thirdName', 'LIKE', '%'.$request->thirdName.'%')
+                    ->where('type', '=', 'مؤسسي');
+
+            }if(isset($request->fourthName)){
+                $person = $person-> where('fourthName', 'LIKE', '%'.$request->fourthName.'%')
+                    ->where('type', '=', 'مؤسسي');
+
+            }if(isset($request->addressDetails)){
+                $person = $person->where('addressDetails', 'LIKE', '%'.$request->addressDetails.'%')
+                    ->where('type', '=', 'مؤسسي');
+
+            }if(isset($request->telephoneNumber)){
+                $person = $person->where('telephoneNumber', 'LIKE', '%'.$request->telephoneNumber.'%')
+                    ->where('type', '=', 'مؤسسي');
+
+            }if(isset($request->CountryOfResidence)){
+                $person = $person->where('CountryOfResidence', 'LIKE', '%'.$request->CountryOfResidence.'%')
+                ->where('type', '=', 'مؤسسي');
+            }
+
+
+            $person = $person->get();
+            return response()->json([
+                'personal' => $person,
+
+            ], 200);
+
         }
+
         else{
             return('no data match');
         }
@@ -100,7 +159,7 @@ class PersonalSponsorsController extends Controller
      */
     public function create()
     {
-        $personel = PersonalSponsor::all();
+        $personal = PersonalSponsor::all();
 
         $country= Country::all();
         $city=City::all();
@@ -109,8 +168,15 @@ class PersonalSponsorsController extends Controller
         $nationality=Nationality::all();
 
 
-        return view('personel.create',compact('personel','country','city','governorate',
-            'neighborhood','nationality'));
+        return response()->json([
+            'personal' => $personal,
+            'country'=>$country,
+            'city'=>$city,
+            'governorate'=>$governorate,
+            'neighborhood'=>$neighborhood,
+            'nationality'=>$nationality
+
+        ], 200);
     }
 
 
@@ -151,7 +217,7 @@ class PersonalSponsorsController extends Controller
 
 
             $personal->type = $request->type;
-            $personal->password = $request->password1;
+            $personal->password = $request->password;
             $personal->firstName = $request->firstName;
             $personal->secondName = $request->secondName;
             $personal->thirdName = $request->thirdName;
@@ -172,26 +238,26 @@ class PersonalSponsorsController extends Controller
 
         elseif ($request->type == "مؤسسي"){
             $personal->password = $request->password;
-
             $personal->type = $request->type;
-            $personal->firstName = $request->firstName1;
-
-        $personal->secondName = $request->secondName1;
-        $personal->thirdName = $request->thirdName1;
-        $personal->fourthName = $request->fourthName1;
-
-        $personal->addressDetails = $request->addressDetails1;
-        $personal->telephoneNumber = $request->telephoneNumber1;
-        $personal->telephoneNumber2 = $request->telephoneNumber2;
-        $personal->ContactPerson = $request->ContactPerson;
-        $personal->email = $request->email1;
-        $personal->CountryOfResidence = $request->CountryOfResidence1;
+            $personal->firstName = $request->firstName;
+            $personal->secondName = $request->secondName;
+            $personal->thirdName = $request->thirdName;
+            $personal->fourthName = $request->fourthName;
+            $personal->addressDetails = $request->addressDetails;
+            $personal->telephoneNumber = $request->telephoneNumber;
+            $personal->telephoneNumber2 = $request->telephoneNumber2;
+            $personal->ContactPerson = $request->ContactPerson;
+            $personal->email = $request->email;
+            $personal->CountryOfResidence = $request->CountryOfResidence;
     }
 
         $personal->save();
 
-        return redirect()->route('personal.index');
 
+        return response()->json([
+            'personal' => $personal,
+
+        ], 200);
     }
 
 
@@ -216,7 +282,13 @@ class PersonalSponsorsController extends Controller
     {
         $personal= PersonalSponsor::find($id);
         $country= Country::all();
-        return view('personel.edit',compact('personal','country'));
+//        return view('personel.edit',compact('personal','country'));
+
+        return response()->json([
+            'personal' => $personal,
+            'country'=>$country
+
+        ], 200);
     }
 
     /**
@@ -228,6 +300,8 @@ class PersonalSponsorsController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $country= Country::all();
         $personal =PersonalSponsor::find($id);
         $personal->firstName= $request->firstName;
         $personal->secondName= $request->secondName;
@@ -238,10 +312,14 @@ class PersonalSponsorsController extends Controller
         $personal->telephoneNumber =$request->telephoneNumber;
 
 
-
-
         $personal->save();
-        return redirect()->route('personal.index');
+
+        return response()->json([
+            'personal' => $personal,
+            'country'=>$country
+
+        ], 200);
+
     }
 
     /**
@@ -256,7 +334,9 @@ class PersonalSponsorsController extends Controller
         $personal=PersonalSponsor::find($id);
         $personal->delete();
 
-        return redirect()->route('personal.index')->with('successMsg',' deleted successfully' );
-        $personal->save();
+        return response()->json([
+            'personal' => $personal
+
+        ], 200);        $personal->save();
     }
 }
