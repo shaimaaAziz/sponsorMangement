@@ -8,6 +8,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 
+    <script src="../dirPagination.js"></script>
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -15,7 +18,7 @@
 
 <body style="direction: rtl" ng-app="myApp"  >
 
-    <div class="container" ng-controller="CRUDController" >
+    <div class="container" ng-controller="CRUDController as data" >
         <div class="container-fluid">
             <div class="row">
                 <div class="col -md-12" >
@@ -112,8 +115,8 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>الإسم</th>
-                                    <th>النوع</th>
+                                    <th ng-click="sort('firstName')">الإسم</th>
+                                    <th ng-click="sort('type')" >النوع</th>
                                     <th>الدولة</th>
                                     <th>العنوان</th>
                                     <th>رقم الهاتف</th>
@@ -123,7 +126,8 @@
                                 </thead>
                                 <tbody>
 
-                                <tr  ng-repeat ="(index , personals) in personal">
+                                <tr  dir-paginate ="(index , personals) in personal |itemsPerPage:data.itemsPerPage "
+                                >
                                     <td>{{ index + 1 }}</td>
 
                                     <td>{{personals.firstName }}{{personals.secondName }}
@@ -150,10 +154,12 @@
 
                             </table>
 
-                            <div>
-                                <posts-pagination></posts-pagination>
-                            </div>
-
+                            <dir-pagination-controls
+                                    max-size="2"
+                                    direction-links="true"
+                                    boundary-links="true"
+                                    on-page-change="data.getData(newPageNumber)" >
+                            </dir-pagination-controls>
 
                         </div>
                     </fieldset>

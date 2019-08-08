@@ -22,7 +22,7 @@ class PersonalSponsorsController extends Controller
     public function index()
     {
 
-//        $personal = DB::table('personal_sponsors')->Paginate(2);
+
         $personal = PersonalSponsor::all();
         $country= Country::all();
         $city=City::all();
@@ -282,7 +282,6 @@ class PersonalSponsorsController extends Controller
     {
         $personal= PersonalSponsor::find($id);
         $country= Country::all();
-//        return view('personel.edit',compact('personal','country'));
 
         return response()->json([
             'personal' => $personal,

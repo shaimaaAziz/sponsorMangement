@@ -28,6 +28,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('personal' ,'PersonalSponsorsController');
 
-Route::get('personal' ,'PersonalSponsorsController@searchGet')->name('search');
-Route::post('personal' ,'PersonalSponsorsController@searchPost')->name('search');
+
+Route::post('personal/search' ,'PersonalSponsorsController@searchPost')->name('search');
 

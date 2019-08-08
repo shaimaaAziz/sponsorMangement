@@ -46,7 +46,8 @@
 
                             <div class="col-md-12  mt-3" >
                                 <label>الدولة</label>
-                                <select  class="col-3 " name="CountryOfResidence" ng-model="personal.CountryOfResidence">
+                                <select  class="col-3 " name="CountryOfResidence"
+                                         ng-model="personal.CountryOfResidence">
                                     <option ng-repeat="x in country" value="{{x.id}} ">{{x.name}}</option>
 
                                 </select>

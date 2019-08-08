@@ -1,6 +1,6 @@
 
 
-var myApp =angular.module("myApp",["ngRoute"]);
+var myApp =angular.module("myApp",["ngRoute",'angularUtils.directives.dirPagination']);
 
 
 myApp.config(function($routeProvider) {
@@ -43,7 +43,27 @@ myApp.controller("CRUDController", function ($scope ,$http,$routeParams,$window)
     $scope.neighborhood = [];
     $scope.nationality = [];
 
-//******* for index
+
+
+
+//******* for index using pagination
+
+    var vm = this;
+    vm.personal = [];
+    vm.pageno = 1;
+    vm.total_count = 0;
+    vm.itemsPerPage = 2;
+    vm.getData = function(pageno){ // This would fetch the data on page change.
+        vm.personal = [];
+        $http.get("personal")
+            . then (function success(response) {
+                vm.personal = response.data.personal;
+                vm.total_count = response.total_count;
+            });
+    };
+    vm.getData(vm.pageno);
+
+    //*********
 
     $scope.loadsponsor = function () {
 
@@ -86,7 +106,7 @@ myApp.controller("CRUDController", function ($scope ,$http,$routeParams,$window)
     //********** search
     $scope.search = function () {
 
-        $http.post('/personal', {
+        $http.post('/personal/search', {
             type: $scope.personal.type,
             firstName: $scope.personal.firstName,
             secondName: $scope.personal.secondName,
@@ -113,9 +133,7 @@ myApp.controller("CRUDController", function ($scope ,$http,$routeParams,$window)
 
     }
 
-
 });
-
 
 
 //************ for edit and  add New Controller
